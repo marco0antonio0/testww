@@ -32,7 +32,7 @@ jobs:
 
       - name: Tag and Push Docker image to Artifact Registry
         run: |
-          IMAGE_TAGG=$LOCATIONS/$IMAGE_NAME$NAME_PROJECT
+          IMAGE_TAGG=$LOCATIONS$IMAGE_NAME$NAME_PROJECT
           NAME_TAGG=$IMAGE_NAME
           docker tag $NAME_TAGG $IMAGE_TAGG
           docker push $IMAGE_TAGG
