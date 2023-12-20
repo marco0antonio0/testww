@@ -12,7 +12,7 @@ jobs:
     env:
       # set vars
       NAME_PROJECT: 'site-next'
-      DOC_REPOSITIORY: 'ola/'
+      DOC_REPOSITIORY: 'tes/'
       LOCATIONS: 'us-central1'
       
       # não toque
