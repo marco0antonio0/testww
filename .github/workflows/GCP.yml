@@ -10,9 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: nextProjectEnvs
     env:
+      # set vars
       NAME_PROJECT: 'site-next'
-      IMAGE_NAME: '-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/tes/'
+      DOC_REPOSITIORY: 'ola/'
       LOCATIONS: 'us-central1'
+      
+      # não toque
+      IMAGE_NAME: '-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,10 +31,10 @@ jobs:
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       - name: Build Docker image
-        run: docker build -t $LOCATIONS$IMAGE_NAME$NAME_PROJECT .
+        run: docker build -t $LOCATIONS$IMAGE_NAME$DOC_REPOSITIORY$NAME_PROJECT .
 
       - name: Tag and Push Docker image to Artifact Registry
-        run: docker push $LOCATIONS$IMAGE_NAME$NAME_PROJECT
+        run: docker push $LOCATIONS$IMAGE_NAME$DOC_REPOSITIORY$NAME_PROJECT
 
       - name: Deploy Docker image to Cloud Run
-        run: gcloud run deploy $NAME_PROJECT --image $LOCATIONS$IMAGE_NAME$NAME_PROJECT --region $LOCATIONS --memory 128Mi --min-instances 0 --max-instances 1 --platform managed --port 80 --allow-unauthenticated
+        run: gcloud run deploy $NAME_PROJECT --image $LOCATIONS$IMAGE_NAME$DOC_REPOSITIORY$NAME_PROJECT --region $LOCATIONS --memory 128Mi --min-instances 0 --max-instances 1 --platform managed --port 80 --allow-unauthenticated
