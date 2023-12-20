@@ -12,7 +12,7 @@ jobs:
     env:
       NAME_PROJECT: site-next
       # alteração no nome IMAGE_NAME
-      IMAGE_NAME: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/artifact-repo/
+      IMAGE_NAME: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
