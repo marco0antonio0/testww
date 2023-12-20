@@ -33,7 +33,7 @@ jobs:
     # defina a ENVs
     env:
       # defina o nome do projeto
-      NAME_PROJECT: 'nova-agil'
+      NAME_PROJECT: 'site-next'
       # defina o nome do repositorio existente
       DOC_REPOSITORY: "tes/"
       # defina a região
