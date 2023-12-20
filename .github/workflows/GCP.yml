@@ -10,10 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: nextProjectEnvs
     env:
-      NAME_PROJECT: site-next
-      # Remova o caractere "-" desnecessário no início do nome da imagem
-      IMAGE_NAME: docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/
-      LOCATIONS: us-central1
+      NAME_PROJECT: 'site-next'
+      IMAGE_NAME: '-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/'
+      LOCATIONS: 'us-central1'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,14 +27,10 @@ jobs:
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       - name: Build Docker image
-        run: docker build -t $LOCATIONS-$IMAGE_NAME$NAME_PROJECT .
+        run: docker build -t $LOCATIONS$IMAGE_NAME$NAME_PROJECT .
 
       - name: Tag and Push Docker image to Artifact Registry
-        run: |
-          IMAGE_TAGG=$LOCATIONS-$IMAGE_NAME$NAME_PROJECT
-          NAME_TAGG=$NAME_PROJECT
-          docker tag $NAME_TAGG $IMAGE_TAGG
-          docker push $IMAGE_TAGG
+        run: docker push $LOCATIONS$IMAGE_NAME$NAME_PROJECT
 
       - name: Deploy Docker image to Cloud Run
-        run: gcloud run deploy $NAME_PROJECT --image $LOCATIONS-$IMAGE_NAME$NAME_PROJECT --region $LOCATIONS --memory 128Mi --min-instances 0 --max-instances 1 --platform managed --port 80 --allow-unauthenticated
+        run: gcloud run deploy $NAME_PROJECT --image $LOCATIONS$IMAGE_NAME$NAME_PROJECT --region $LOCATIONS --memory 128Mi --min-instances 0 --max-instances 1 --platform managed --port 80 --allow-unauthenticated
