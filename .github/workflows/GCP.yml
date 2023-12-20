@@ -11,7 +11,7 @@ jobs:
     environment: nextProjectEnvs
     env:
       NAME_PROJECT: site-next
-      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/
+      IMAGE_NAME: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/site-next
     steps:
       # Git checkout
       - name: Checkout
@@ -25,15 +25,17 @@ jobs:
 
       # gcloud configure docker
       - name: Configure Docker
-        run: gcloud auth configure-docker --quiet
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       # build image
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME$NAME_PROJECT .
 
-      # push image to registry
+      # push image to Artifact Registry
       - name: Push Docker image
-        run: docker push $IMAGE_NAME$NAME_PROJECT
+        run: |
+          docker tag $IMAGE_NAME$NAME_PROJECT $IMAGE_NAME$NAME_PROJECT
+          docker push $IMAGE_NAME$NAME_PROJECT
 
       # deploy image
       - name: Deploy Docker image
