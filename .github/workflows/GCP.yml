@@ -11,7 +11,7 @@ jobs:
     environment: nextProjectEnvs
     env:
       NAME_PROJECT: 'site-next'
-      IMAGE_NAME: '-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/'
+      IMAGE_NAME: '-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/tes/'
       LOCATIONS: 'us-central1'
     steps:
       - name: Checkout
