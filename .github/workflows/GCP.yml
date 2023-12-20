@@ -11,8 +11,8 @@ jobs:
     environment: nextProjectEnvs
     env:
       NAME_PROJECT: site-next
-      # alteração no nome IMAGE_NAME
-      IMAGE_NAME: -docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/
+      # Remova o caractere "-" desnecessário no início do nome da imagem
+      IMAGE_NAME: docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gcr.io/
       LOCATIONS: us-central1
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
       - name: Tag and Push Docker image to Artifact Registry
         run: |
           IMAGE_TAGG=$LOCATIONS$IMAGE_NAME$NAME_PROJECT
-          NAME_TAGG=$IMAGE_NAME
+          NAME_TAGG=$NAME_PROJECT
           docker tag $NAME_TAGG $IMAGE_TAGG
           docker push $IMAGE_TAGG
 
