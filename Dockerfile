@@ -1,23 +1,20 @@
-# Use the official Node.js image as a base image
-FROM node:18
+# Use a imagem oficial do Node.js como base
+FROM node:14
 
-# Create and set the working directory
-WORKDIR /app
+# Cria e define o diretório de trabalho
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
+# Copia o arquivo package.json e package-lock.json para o diretório de trabalho
 COPY package*.json ./
 
-# Install dependencies
+# Instala as dependências
 RUN npm install
 
-# Copy the entire application to the working directory
+# Copia o restante do código-fonte para o diretório de trabalho
 COPY . .
 
-# Build the Next.js application
-RUN npm run build
-
-# Expose the port that Next.js will run on
+# Expõe a porta que o aplicativo vai rodar
 EXPOSE 3000
 
-# Define the command to start the application
+# Comando para executar o aplicativo quando o contêiner for iniciado
 CMD ["npm", "start"]
